@@ -1,0 +1,15 @@
+@server = http://localhost:4005
+@me = Authorization: Basic {{$processEnv USER}}:
+@id = 38e16507-0cb5-4ced-beb0-b075ff1085df
+
+GET {{server}}/odata/v4/action/Actions
+
+### ---- CREATE A SURVEY TEMPLATE ---------------------------------------------------
+POST {{server}}/odata/v4/action/Actions
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+  "ID": "6359f9e2-b18e-49a2-8d88-9138af6ae581",
+  "name": "Johnny",
+  "email": "johnny@someplace.com"
+}

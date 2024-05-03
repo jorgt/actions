@@ -1,0 +1,4 @@
+ID;VIN;InternalNumber;manufacturer;model;year;stock;status_ID
+eefa736c-dd33-4b1c-9d8f-38050e9c8295;AVWZZZ1JZ3W;1;Volkswagen;Golf;1999;1;eefa736c-dd33-4b1c-9d8f-38050e9c8295;
+bdaf90b9-6682-454e-aca2-53122e9814ca;BVWZZZ1JZ3W;2;Volkswagen;Golf;2013;5;eefa736c-dd33-4b1c-9d8f-38050e9c8295;
+312e738b-47ec-4660-828f-b7459999d52a;CVWZZZ1JZ3W;3;Volkswagen;Golf;2023;1;eefa736c-dd33-4b1c-9d8f-38050e9c8295;

@@ -1,0 +1,21 @@
+{
+  "name": "actions",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^7",
+    "axios": "^1.6.8",
+    "express": "^4",
+    "json-rules-engine": "^6.5.0",
+    "zod": "^3.23.5"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^1"
+  },
+  "scripts": {
+    "start": "cds-serve"
+  }
+}
