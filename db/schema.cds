@@ -5,24 +5,75 @@ using {
 
 namespace actions;
 
-entity Actions : cuid, managed {
-  @mandatory
+type ActionType : String enum {
+  COMPLEX                = 'C';
+  DATA                   = 'D';
+  ONPREMISE              = 'O';
+  STATUS_ONLY            = 'S';
+};
+
+/**
+ * STANDARD ACTION
+ */
+aspect action : cuid, managed {
+  // @mandatory
   name        : String;
   description : String;
   userAction  : Boolean;
 
-  @mandatory
-  type        : String enum {
-    COMPLEX     = 'C';
-    DATA        = 'D';
-    ONPREMISE   = 'O';
-    STATUS_ONLY = 'S';
-  };
-
-  statuses    : Association to many Action_Status
-                  on statuses.action = $self;
+  // @mandatory
+  type        : ActionType;
 }
 
+type Action: action {}
+
+@assert.unique: {item: [
+  name
+]}
+entity Actions : action {
+  statuses : Association to many Action_Status
+               on statuses.action = $self;
+}
+
+/**
+ * DATA ACTION
+ * this is the type of action that calls a service and runs rules over any of the fields with conditions
+ */
+type Operator   : String enum {
+  EQUAL                  = 'equal';
+  NOT_EQUAL              = 'notEqual';
+  LESS_THAN              = 'lessThan';
+  LESS_THAN_INCLUSIVE    = 'lessThanInclusive';
+  GREATER_THAN           = 'greaterThan';
+  GREATER_THAN_INCLUSIVE = 'greaterThanInclusive';
+  ![IN]                  = 'in';
+  NOT_IN                 = 'notIn';
+  CONTAINS               = 'contains';
+  DOES_NOT_CONTAIN       = 'doesNotContain';
+}
+
+aspect rule : {
+  field    : String;
+  operator : Operator;
+  value    : String;
+}
+
+type Rule       : rule {}
+
+aspect dataAction : cuid, managed {
+  action  : Association to one Actions;
+  service : String;
+  entity  : String;
+  rules : array of Rule;
+}
+
+type DataAction: dataAction {};
+
+entity DataActions : dataAction {};
+
+/**
+ * STATUS DEFINITIONS
+ */
 entity Statuses : cuid, managed {
   name        : String;
   description : String;
@@ -30,6 +81,9 @@ entity Statuses : cuid, managed {
                   on actions.status = $self;
 }
 
+/**
+ * JUNCTION TABLE BETWEEN Action AND Status
+ */
 @assert.unique: {item: [
   action,
   status
@@ -42,6 +96,9 @@ entity Action_Status : cuid, managed {
   statusOnFail   : Association to Statuses;
 }
 
+/**
+ * LOGS
+ */
 entity ActionLog : cuid, managed {
   entity     : UUID;
   entityType : String;

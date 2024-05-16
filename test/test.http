@@ -1,15 +1,33 @@
 @server = http://localhost:4005
 @me = Authorization: Basic {{$processEnv USER}}:
-@id = 38e16507-0cb5-4ced-beb0-b075ff1085df
 
 GET {{server}}/odata/v4/action/Actions
 
-### ---- CREATE A SURVEY TEMPLATE ---------------------------------------------------
-POST {{server}}/odata/v4/action/Actions
+### ---- GET ACTIONS ---------------------------------------------------
+GET {{server}}/odata/v4/action/Actions
+
+### ---- GET ACTIONS ---------------------------------------------------
+GET {{server}}/odata/v4/action/getDataActionByName(name='name')
+
+### ---- CREATE DATA ACTION  ---------------------------------------------------
+POST {{server}}/odata/v4/action/createDataAction
 Content-Type: application/json;IEEE754Compatible=true
 
 {
-  "ID": "6359f9e2-b18e-49a2-8d88-9138af6ae581",
-  "name": "Johnny",
-  "email": "johnny@someplace.com"
+  "action": {
+    "name": "name",
+    "description": "description",
+    "userAction": false,
+    "type": "D"
+  },
+  "definition": {
+    "service": "http://localhost:4006/odata/v4/test",
+    "entity": "/Vehicles",
+    "rules": [{
+      "field": "stock",
+      "operator": "equals",
+      "value": "1"
+    }]
+  }
 }
+
