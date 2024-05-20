@@ -3,7 +3,6 @@ const LOG = cds.log("actions");
 const axios = require("axios");
 const { Engine } = require("json-rules-engine");
 const { v4 } = require("uuid");
-const zod = require("zod");
 
 const db = cds.connect.to("db");
 
